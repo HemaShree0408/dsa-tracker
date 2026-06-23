@@ -29,9 +29,6 @@ Here is a glimpse of the application:
 ### Problem List
 ![Problem List](screenshots/problems.png)
 
-### Logic Notes
-![Logic Notes](screenshots/logic_notes.png)
-
 ## Technologies Used
 
 - **Backend**: Python, Django
