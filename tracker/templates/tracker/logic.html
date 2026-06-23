@@ -1,0 +1,36 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}Logic Notes - DSA Tracker{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 2rem;">
+    <h1>Logic Notes</h1>
+    <p style="color: var(--text-secondary);">Your personal notes and logic for solved problems.</p>
+</div>
+
+<div class="card">
+    {% if problems %}
+        {% for problem in problems %}
+        <div class="logic-card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                    <h4 style="margin-bottom: 0.25rem;">{{ problem.name }}</h4>
+                    <a href="{% url 'topic_problems' problem.topic.id %}" style="font-size: 0.85rem; color: var(--text-secondary); text-decoration: none;">
+                        Topic: {{ problem.topic.name }}
+                    </a>
+                </div>
+                <a href="{% url 'edit_problem' problem.id %}" class="btn btn-outline btn-sm">Edit Notes</a>
+            </div>
+            
+            <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1rem 0;">
+            
+            <div style="font-size: 0.95rem; white-space: pre-wrap;">{{ problem.logic_notes }}</div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div style="text-align: center; padding: 3rem 0;">
+            <p style="color: var(--text-secondary);">No logic notes available yet.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

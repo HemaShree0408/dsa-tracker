@@ -1,0 +1,58 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}Revision List - DSA Tracker{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 2rem;">
+    <h1>Revision List</h1>
+    <p style="color: var(--text-secondary);">Problems that you have marked for revision.</p>
+</div>
+
+<div class="card">
+    {% if problems %}
+    <ul class="item-list">
+        {% for problem in problems %}
+        <li>
+            <div class="item-content">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                
+                <div style="display: flex; flex-direction: column;">
+                    <span class="item-title" style="margin-bottom: 0.25rem;">
+                        {{ problem.name }}
+                    </span>
+                    <div style="display: flex; gap: 1rem; align-items: center; font-size: 0.85rem;">
+                        <a href="{% url 'topic_problems' problem.topic.id %}" style="color: var(--text-secondary); text-decoration: none;">
+                            Topic: <span style="color: var(--text-primary);">{{ problem.topic.name }}</span>
+                        </a>
+                        
+                        {% if problem.difficulty == 'Easy' or problem.difficulty == 'easy' %}
+                            <span class="badge badge-easy">{{ problem.difficulty }}</span>
+                        {% elif problem.difficulty == 'Medium' or problem.difficulty == 'medium' %}
+                            <span class="badge badge-medium">{{ problem.difficulty }}</span>
+                        {% else %}
+                            <span class="badge badge-hard">{{ problem.difficulty }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <a href="{% url 'edit_problem' problem.id %}" class="btn btn-outline btn-sm">Edit</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div style="text-align: center; padding: 3rem 0;">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--border-color)" stroke-width="1" style="margin-bottom: 1rem;">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <h3 style="color: var(--text-primary); margin-top: 0;">You're all caught up!</h3>
+        <p style="color: var(--text-secondary);">No problems currently marked for revision.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

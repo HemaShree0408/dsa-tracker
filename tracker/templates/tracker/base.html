@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DSA Tracker{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'tracker/styles.css' %}">
+</head>
+<body>
+
+    <header>
+        <a href="{% url 'dashboard' %}" class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            DSA Tracker
+        </a>
+        <nav class="nav-links">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a href="{% url 'topics_list' %}">Topics</a>
+            <a href="{% url 'revision_list' %}">Revision</a>
+            <a href="{% url 'logic_list' %}">Logic Notes</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>

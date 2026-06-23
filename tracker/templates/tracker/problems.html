@@ -1,0 +1,63 @@
+{% extends 'tracker/base.html' %}
+
+{% block title %}{{ topic.name }} - Problems{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div>
+        <a href="{% url 'topics_list' %}" style="color: var(--text-secondary); text-decoration: none; margin-bottom: 0.5rem; display: inline-block;">&larr; Back to Topics</a>
+        <h1>{{ topic.name }} Problems</h1>
+    </div>
+</div>
+
+<div class="card">
+    {% if problems %}
+    <ul class="item-list">
+        {% for problem in problems %}
+        <li>
+            <div class="item-content">
+                {% if problem.solved %}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                {% else %}
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                </svg>
+                {% endif %}
+                
+                <div style="display: flex; flex-direction: column;">
+                    <span class="item-title" style="margin-bottom: 0.25rem;">
+                        {{ problem.name }}
+                        {% if problem.need_revision %}
+                        <span class="badge" style="background: rgba(248, 113, 113, 0.2); color: #f87171; margin-left: 0.5rem;">Needs Revision</span>
+                        {% endif %}
+                    </span>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        {% if problem.difficulty == 'Easy' or problem.difficulty == 'easy' %}
+                            <span class="badge badge-easy">{{ problem.difficulty }}</span>
+                        {% elif problem.difficulty == 'Medium' or problem.difficulty == 'medium' %}
+                            <span class="badge badge-medium">{{ problem.difficulty }}</span>
+                        {% else %}
+                            <span class="badge badge-hard">{{ problem.difficulty }}</span>
+                        {% endif %}
+                        
+                        {% if problem.leetcode_link %}
+                        <a href="{{ problem.leetcode_link }}" target="_blank" style="font-size: 0.85rem; color: var(--accent-color); text-decoration: none;">View on LeetCode &nearr;</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="actions">
+                <a href="{% url 'edit_problem' problem.id %}" class="btn btn-outline btn-sm">Edit</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p style="text-align: center; color: var(--text-secondary); padding: 2rem 0;">No problems added to this topic yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
